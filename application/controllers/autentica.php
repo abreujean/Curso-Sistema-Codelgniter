@@ -15,10 +15,18 @@ function __construct(){
        $this->form_validation->set_rules('senha', 'Senha', 'trim|required|callback_database');
        
     if($this->form_validation->run()==FALSE){
-//        $this->load->view('login');
+//Falha de validação: Redirecionando para pagina de login
            redirect('login','refresh');
             
-    } else{ 
+    } else{
+        //Validação ok acesso a área privada
+        $login=$this->input->post('login');
+        $sess_array = array();
+        $sess_array = array(
+         'usuarioid' =>$login
+        );
+        
+        $this->session->set_userdata('logged_in',$sess_array);
         redirect('home/dashboard','refresh');
 //            $login=$this->input->post('login');
 //            var_dump($login);
